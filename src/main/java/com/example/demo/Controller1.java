@@ -1,18 +1,12 @@
-/*
-Crear aplicación que tenga estos endpoints.
-- /user/{nombre} (GET)
-Devuelve un String poniendo “Hola” + el contenido de la variable nombre
-- /useradd (POST)Recibe un objeto tipo Persona.
-Persona sera una clase con los campos: nombre, población y edad,
-Devolver un objeto persona cuya edad sea la recibida más una.
-*/
-
 package com.example.demo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
 public class Controller1 {
+
+    @Autowired UserServices userController;
 
     @GetMapping("/user/{name}")
     public String user(@PathVariable String name){
@@ -28,5 +22,14 @@ public class Controller1 {
     @GetMapping("/hello")
     public String hello(){
         return "Hello World";
+    }
+
+
+    @PostMapping("/userimpl")
+    public UserServices userimpl(@RequestBody User user) {
+        userController.setName(user.name);
+        userController.setCity(user.city);
+        userController.setAge(user.age);
+        return userController;
     }
 }
